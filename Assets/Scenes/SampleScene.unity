@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.4964127, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b099724bbe9194840b968968948058ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Angle: 137
+  m_Angle: 49.8
   m_Scale: 0.5
 --- !u!114 &590490160
 MonoBehaviour:
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DrawGizmo: 1
-  m_Count: 47
+  m_Count: 123
   m_Phyllotaxis: {fileID: 590490159}
   m_ArrowPrefab: {fileID: 366111632174679258, guid: 44ea553c53ccca64eafbb91aea60827e,
     type: 3}
