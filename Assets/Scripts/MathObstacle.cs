@@ -11,24 +11,17 @@ public class MathObstacle : MonoBehaviour
     public EMathOperation Operation => m_Type;
     public int Count => m_Count;
 
-    private void Start()
+    private void Awake()
     {
         if (m_RandomizeAtStart)
         {
             GenerateRandomOperation();
         }
-
-        UpdateLabel();
     }
 
     private void GenerateRandomOperation()
     {
         int random = Random.Range(0, 4);
         m_Type = (EMathOperation)random;
-    }
-
-    private void UpdateLabel()
-    {
-
     }
 }

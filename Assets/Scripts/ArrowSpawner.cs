@@ -14,6 +14,8 @@ public class ArrowSpawner : MonoBehaviour
 
     public void Spawn(int count)
     {
+        m_Count = count;
+
         for (int i = m_Arrows.Count - 1; i >= 0; i--)
         {
             var go = m_Arrows[i].gameObject;
@@ -22,7 +24,7 @@ public class ArrowSpawner : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            Vector3 pos = m_Phyllotaxis.Calculate(i);
+            Vector3 pos = transform.TransformPoint(m_Phyllotaxis.Calculate(i));
             var arrow = Instantiate(m_ArrowPrefab, pos, Quaternion.identity, transform);
             arrow.OnHumanCollision += OnArrowColision;
             m_Arrows.Add(arrow);
@@ -87,6 +89,8 @@ public class ArrowSpawner : MonoBehaviour
         if (!m_DrawGizmo) return;
 
         if (!m_Phyllotaxis) return;
+
+        Gizmos.color = Color.blue;
 
         for (int i = 0; i < m_Count; i++)
         {
