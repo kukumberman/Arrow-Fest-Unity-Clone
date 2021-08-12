@@ -21,6 +21,16 @@ public class ArrowController : MonoBehaviour
         m_Spawner = FindObjectOfType<ArrowSpawner>();
     }
 
+    private void OnEnable()
+    {
+        m_Spawner.OnArrowSpawned += OnArrowSpawned;
+    }
+
+    private void OnDisable()
+    {
+        m_Spawner.OnArrowSpawned -= OnArrowSpawned;
+    }
+
     private void Start()
     {
         m_Spawner.Spawn(m_Count);
@@ -34,7 +44,10 @@ public class ArrowController : MonoBehaviour
 
         float w = m_RoadWidth * 0.5f;
         m_Horizontal = Mathf.Clamp(m_Horizontal, -w, w);
-        transform.position = Vector3.right * m_Horizontal + m_Offset;
+
+        // сделано через два отдельных объекта
+        // чтобы тригер ивент не вызывался при коллизии каждой стрелы об препятсвие с числом
+        transform.position = m_Spawner.transform.position = Vector3.right * m_Horizontal + m_Offset;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,6 +60,20 @@ public class ArrowController : MonoBehaviour
 
             m_Spawner.Spawn(m_Count);
         }
+    }
+
+    private void OnArrowSpawned(ArrowObject arrow)
+    {
+        arrow.OnHumanCollision += OnArrowHumanCollision;
+    }
+
+    private void OnArrowHumanCollision(ArrowObject arrow)
+    {
+        arrow.OnHumanCollision -= OnArrowHumanCollision;
+
+        m_Count -= 1;
+
+        ForceChangedEvent();
     }
 
     private void ForceChangedEvent()

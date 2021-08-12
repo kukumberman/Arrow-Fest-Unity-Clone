@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ArrowSpawner : MonoBehaviour
 {
+    public event Action<ArrowObject> OnArrowSpawned = null;
+
     [SerializeField] private bool m_DrawGizmo = false;
     [SerializeField] private int m_Count = 10;
     
@@ -16,10 +19,13 @@ public class ArrowSpawner : MonoBehaviour
     {
         m_Count = count;
 
+        // todo: use pool
+
         for (int i = m_Arrows.Count - 1; i >= 0; i--)
         {
-            var go = m_Arrows[i].gameObject;
-            Destroy(go);
+            var arrow = m_Arrows[i];
+            m_Arrows.Remove(arrow);
+            Destroy(arrow.gameObject);
         }
 
         for (int i = 0; i < count; i++)
@@ -28,6 +34,7 @@ public class ArrowSpawner : MonoBehaviour
             var arrow = Instantiate(m_ArrowPrefab, pos, Quaternion.identity, transform);
             arrow.OnHumanCollision += OnArrowColision;
             m_Arrows.Add(arrow);
+            OnArrowSpawned?.Invoke(arrow);
         }
     }
 
